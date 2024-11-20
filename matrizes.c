@@ -1,17 +1,7 @@
 #include <stdio.h>
 
-// Parâmetros de entrada
-int h = 1;
-int w = 3;
-
-int xtrainsize = 5;
-double xtrain[5] = {7.0, 8.0, 9.5, 2.0, 11.1};
-
-int xtestsize = 10;
-double xtest[10] = {10.0, 7.55, 50.0, 3.5, 3.7, 2.0, 4.67, 8.55, 9.45, 60.4};
-
 // Função para criar a matriz
-void createMatriz(int n, int h, int w, double array[], double result[][w]) {
+void createMatriz(int n, int h, int w, double* array, double** result) {
     int limitindex = n - w - h + 2; // Índice limite para as linhas
     int i, j;
 
@@ -22,7 +12,20 @@ void createMatriz(int n, int h, int w, double array[], double result[][w]) {
     }
 }
 
+
+// TESTES
+/*
 int main() {
+    // Parametros de entrada
+    int h = 1;
+    int w = 3;
+
+    int xtrainsize = 5;
+    double xtrain[5] = {7.0, 8.0, 9.5, 2.0, 11.1};
+
+    int xtestsize = 10;
+    double xtest[10] = {10.0, 7.55, 50.0, 3.5, 3.7, 2.0, 4.67, 8.55, 9.45, 60.4};
+    
     // Calcula o número de linhas na matriz resultante
     int rows = xtrainsize - w - h + 2;
 
@@ -40,4 +43,4 @@ int main() {
     }
 
     return 0;
-}
+}*/
