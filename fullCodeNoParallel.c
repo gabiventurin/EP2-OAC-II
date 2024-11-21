@@ -4,9 +4,5 @@
 #include <matrizes>
 
 int main(){
-    char file1 = "data/Xtest.txt";
-
     
-
-    return 0;
 }
