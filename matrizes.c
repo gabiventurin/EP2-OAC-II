@@ -1,7 +1,7 @@
 #include <stdio.h>
 
 // Função para criar a matriz
-void createMatriz(int n, int h, int w, double* array, double** result) {
+void createMatriz(int n, int h, int w, double* array, double result[][w]) {
     int limitindex = n - w - h + 2; // Índice limite para as linhas
     int i, j;
 
@@ -14,7 +14,7 @@ void createMatriz(int n, int h, int w, double* array, double** result) {
 
 
 // TESTES
-/*
+
 int main() {
     // Parametros de entrada
     int h = 1;
@@ -43,4 +43,4 @@ int main() {
     }
 
     return 0;
-}*/
+}
