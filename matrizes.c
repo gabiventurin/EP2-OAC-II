@@ -1,4 +1,5 @@
 #include <stdio.h>
+#include <stdlib.h>
 
 // Função para criar a matriz
 void createMatriz(int n, int h, int w, double* array, double result[][w]) {
@@ -12,6 +13,17 @@ void createMatriz(int n, int h, int w, double* array, double result[][w]) {
     }
 }
 
+void createYtrain(int n, int h, int w, int ytrainSize, double* xtrain, double* ytrain){
+
+    int xTrainPoint = h + w - 1;
+
+    for(int i = 0; i<ytrainSize; i++){
+        ytrain[i] = xtrain[xTrainPoint];
+        xTrainPoint++;
+    }
+
+    return;
+}
 
 // TESTES
 
@@ -33,14 +45,25 @@ int main() {
     double result[rows][w];
     createMatriz(xtrainsize, h, w, xtrain, result);
 
-    // Imprime a matriz resultante
+    /*/ Imprime a matriz resultante
     printf("Matriz resultante:\n");
     for (int i = 0; i < rows; i++) {
         for (int j = 0; j < w; j++) {
             printf("%.2f ", result[i][j]);
         }
         printf("\n");
-    }
+    }*/
+
+   int ytrainSize = xtestsize - w - h + 1;
+   double* ytrain = (double*)malloc(ytrainSize * sizeof(double));
+
+   createYtrain(xtestsize, h, w, ytrainSize, xtest, ytrain);
+
+   int sizeYtrain = xtestsize - h - w + 1;
+
+   for(int i = 0; i<sizeYtrain; i++){
+    printf("%.2lf\n", ytrain[i]);
+   }
 
     return 0;
 }
