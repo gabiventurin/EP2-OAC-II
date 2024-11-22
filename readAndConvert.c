@@ -1,13 +1,16 @@
 #include <stdio.h>
 #include <stdlib.h>
 
-int getNumberOfLines(FILE* fptr){
+int getNumberOfLines(char* f){
+    FILE* fptr = fopen(f, "r");
     int count = 0;
     char* tmp;
 
     while (fgets(tmp, 30, fptr)){
         count++;
     }
+
+    fclose(f);
 
     return count;
 }
@@ -34,7 +37,7 @@ void readFileAndConvertToArray(char* f, double* array){
 
     fileString = (char*)malloc(sizeOfFile * sizeof(char)); // aloca o espaco para guardar o arquivo em uma string
 
-    sizeOfArray = getNumberOfLines(fptr); // finds the number of lines in the array
+    sizeOfArray = getNumberOfLines(f); // finds the number of lines in the array
 
     array = (double*)malloc(sizeOfArray * sizeof(double));
 

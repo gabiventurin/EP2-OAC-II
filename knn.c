@@ -45,9 +45,9 @@ int main() {
     double ytrain[6] = {7.567, 8.547, 9.88, 10.00, 10.768, 11.4356};
     int xtrainSize = 3;
     int xtestSize = 7;
-    int m = 3;
+    int w = 3;
 
-    double* ytest = knn(m, xtrainSize, xtestSize, xtrain, xtest, ytrain);
+    double* ytest = knn(w, xtrainSize, xtestSize, xtrain, xtest, ytrain);
 
     for (int i = 0; i < xtestSize; i++) {
         printf("%f\n", ytest[i]);

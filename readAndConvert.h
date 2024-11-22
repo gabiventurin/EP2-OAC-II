@@ -3,7 +3,7 @@
 /**
  * Function that reads a string and returns the number of '\n' in it
  */
-int getNumberOfLines(FILE* fptr){}
+int getNumberOfLines(char* f){}
 
 /**
  * Function that receives a file and returns a double array of all the numbers in it
