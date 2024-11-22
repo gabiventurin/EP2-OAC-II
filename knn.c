@@ -1,13 +1,13 @@
 #include <stdio.h>
 #include <stdlib.h>
 
-double* knn(double(* xtrain)[3], double (* xtest)[3], double* ytrain, int m, int xtrainSize, int xtestSize) {
+double* knn(int w, int xtrainSize, int xtestSize, double xtrain[xtrainSize][w], double xtest[xtestSize][w], double* ytrain) {
     double* ytest = (double*)malloc(xtestSize * sizeof(double));
     for (int i = 0; i < xtestSize; i++) {
         double* dist = (double*)malloc(xtrainSize * sizeof(double));
         for (int j = 0; j < xtrainSize; j++) {
             dist[j] = 0;
-            for (int k = 0; k < m; k++) {
+            for (int k = 0; k < w; k++) {
                 dist[j] += (xtrain[j][k] - xtest[i][k]) * (xtrain[j][k] - xtest[i][k]);
             }
         }
@@ -28,14 +28,17 @@ double* knn(double(* xtrain)[3], double (* xtest)[3], double* ytrain, int m, int
             }
         }
         double sum = 0;
-        for (int j = 0; j < m; j++) {
+        for (int j = 0; j < w; j++) {
             sum += ytrain[idx[j]];
         }
-        ytest[i] = sum / m;
+        ytest[i] = sum / w;
     }
     return ytest;
 }
 
+
+//TESTES
+/*
 int main() {
     double xtrain[3][3] = {{4.99, 5.67, 9.134}, {7.567, 8.547, 9.88}, {5.32, 6.12, 9.44}};
     double xtest[7][3] = {{4.99, 5.67, 9.134}, {5.67, 9.134, 7.567}, {9.134, 7.567, 8.547}, {7.567, 8.547, 9.88}, {8.547, 9.88, 5.32}, {9.88, 5.32, 6.12}, {5.32, 6.12, 9.44}};
@@ -44,11 +47,11 @@ int main() {
     int xtestSize = 7;
     int m = 3;
 
-    double* ytest = knn(xtrain, xtest, ytrain, m, xtrainSize, xtestSize);
+    double* ytest = knn(m, xtrainSize, xtestSize, xtrain, xtest, ytrain);
 
     for (int i = 0; i < xtestSize; i++) {
         printf("%f\n", ytest[i]);
     }
 
     return 0;
-}
+}*/
