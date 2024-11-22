@@ -65,5 +65,9 @@ int main() {
     printf("%.2lf\n", ytrain[i]);
    }
 
+   int x = findArraySize(xtest);
+
+   printf("%i\n", x);
+
     return 0;
 }
