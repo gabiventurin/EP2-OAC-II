@@ -7,7 +7,7 @@
 int main(){
 
     // DETERMINACAO DOS ARQUIVOS
-    char* xtrain1 = "data/aa.txt";
+    char* xtrain1 = "data/Xtrain.txt";
     char* xtest1 = "data/Xtest.txt";
     char* ytest = "output/Ytest.txt";
 

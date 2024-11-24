@@ -2,5 +2,6 @@ readAndConvert
 matrizes
 fullCodeNoParallel
 *.exe
-.vscode*
 teste*
+*.o
+ep

@@ -1,5 +1,6 @@
 #include <stdio.h>
 #include <stdlib.h>
+#include <locale.h>
 
 int getNumberOfLines(char* f){
     FILE* fptr = fopen(f, "r");
@@ -23,6 +24,8 @@ double* readFileAndConvertToArray(char* f){
     char numberString[30];
     int sizeOfArray; // usado para guardar o tamanho da matriz
     double* array;
+
+    //setlocale(LC_ALL, "C");
     
     fptr = fopen(f, "r"); // abre o arquivo
 
@@ -38,7 +41,7 @@ double* readFileAndConvertToArray(char* f){
 
     for(int i = 0; i<sizeOfArray; i++){
         if(fgets(numberString, 30, fptr)!=NULL){
-            int tmpDouble = atof(numberString);
+            double tmpDouble = atof(numberString);
             array[i] = tmpDouble;
         }
     }
@@ -67,7 +70,7 @@ void readArrayAndConvertToFile(double* array, int arraySize){
 
 
 // USE FOR TESTS
-
+/*
 int main(){
 
     char* file = "data/teste.txt";
@@ -86,4 +89,4 @@ int main(){
     readArrayAndConvertToFile(array, arraySize);
 
     printf("Done!");
-}
+}*/
