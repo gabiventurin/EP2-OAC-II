@@ -43,11 +43,11 @@ double* knnParalel(int w, int xtrainSize, int xtestSize, double xtrain[xtrainSiz
     // ACHO QUE ESSE PEDACO QUE PRECISA SER PARALELIZADO PORQUE É NA ORGANIZAÇÃO DO YTEST QUE ESTÁ O CUSTO COMPUTACIONAL
     // PRECISA DIVIDIR O YTEST E DEIXAR O FOR I CERTINHO PRA ELE ACERTAR A LOCALIZAÇÃO DO RESULTADO NO ARRAY
 
-    // OUTRO TESTE QUE PODE SER FEITO É PARALELIZAR INTERNAMENTE CADA ITERAÇÃO DE I
+    // OUTRO TESTE QUE PODE SER FEITO É PARALELIZAR INTERNAMENTE CADA ITERAÇÃO DE i
     #pragma omp paralel
     {
         int i;
-        #pragma omp for // linha problema 1
+        #pragma omp for
         for (i = 0; i < xtestSize; i++) { // iterates over each xtest
             double* dist = (double*)malloc(xtrainSize * sizeof(double)); // memory allocation for the intermediary array
             for (int j = 0; j < xtrainSize; j++) {
@@ -76,7 +76,7 @@ double* knnParalel(int w, int xtrainSize, int xtestSize, double xtrain[xtrainSiz
             for (int j = 0; j < w; j++) {
                 sum += ytrain[idx[j]];
             }
-            ytest[i] = sum / w; // linha problema 2 :(
+            ytest[i] = sum / w;
         }
     }
     return ytest;
