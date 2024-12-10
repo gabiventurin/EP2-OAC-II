@@ -13,7 +13,7 @@ matrizes:
 	gcc -c -g -o matrizes.o matrizes.c
 
 knn:
-	gcc -c -g -o knn.o knn.c -fopenmp
+	gcc -c -g -o knn.o knn.c -lomp5
 
 pedantic_parallel: readAndConvert_pedantic matrizes_pedantic knn_pedantic
 	gcc -ansi -std=c99 -pedantic -Wall -Werror readAndConvert_pedantic.o matrizes_pedantic.o knn_pedantic.o fullCodeParallel.c -o ep
