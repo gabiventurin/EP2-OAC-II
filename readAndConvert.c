@@ -52,10 +52,10 @@ double* readFileAndConvertToArray(char* f){
 }
 
 
-void readArrayAndConvertToFile(double* array, int arraySize){
+void readArrayAndConvertToFile(double* array, int arraySize, char* fileName){
     FILE* fptr;
     
-    fptr = fopen("output/Ytest.txt", "w");
+    fptr = fopen(fileName, "w");
 
     fprintf(fptr, "%.2lf", array[0]);
 

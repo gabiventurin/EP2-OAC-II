@@ -8,8 +8,8 @@
 int main(){
 
     // DETERMINACAO DOS ARQUIVOS
-    char* xtrain1 = "data/Xtrain.txt";
-    char* xtest1 = "data/Xtest.txt";
+    char* xtrain1 = "data/dados_xtrain.txt";
+    char* xtest1 = "data/dados_xtest_10.txt";
     char* ytest = "output/Ytest.txt";
 
     printf("Arquivos determinados!\nLendo arquivos e colocando em arrays...\n");
@@ -74,7 +74,7 @@ int main(){
 
         tempos[i] = timeEnd - timeInit;
 
-        readArrayAndConvertToFile(ytest1, nXtest1);
+        readArrayAndConvertToFile(ytest1, nXtest1, ytest);
     }
     
     printf("Tempo de cada iteração:\n");

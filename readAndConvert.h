@@ -11,4 +11,4 @@ double* readFileAndConvertToArray(char* f);
 /**
  * Function that receives a double array and its size and puts it into the file "output/Ytest.txt" 
  */
-void readArrayAndConvertToFile(double* array, int arraySize);
+void readArrayAndConvertToFile(double* array, int arraySize, char* fileName);

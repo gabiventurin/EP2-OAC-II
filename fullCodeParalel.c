@@ -8,9 +8,9 @@
 int main(){
 
     // DETERMINACAO DOS ARQUIVOS
-    char* xtrain1 = "data/Xtrain.txt";
-    char* xtest1 = "data/Xtest.txt";
-    char* ytest = "output/Ytest.txt";
+    char* xtrain1 = "data/dados_xtrain.txt";
+    char* xtest1 = "data/dados_xtest_10.txt";
+    char* ytest = "output/YtestPar.txt";
 
     printf("Arquivos determinados!\nLendo arquivos e colocando em arrays...\n");
 
@@ -65,7 +65,7 @@ int main(){
 
         // REALIZACAO DO KNN
 
-        double* ytest1 = knnParalel(w, nXtrain1, nXtest1, matrixXtrain1, matrixXtest1, ytrain1);
+        double* ytest1 = knnParalel(w, nXtrain1, nXtest1, matrixXtrain1, matrixXtest1, ytrain1, 4);
 
         double timeEnd = (double) clock();
         timeEnd = timeEnd / CLOCKS_PER_SEC;
@@ -74,7 +74,7 @@ int main(){
 
         tempos[i] = timeEnd - timeInit;
 
-        readArrayAndConvertToFile(ytest1, nXtest1);
+        readArrayAndConvertToFile(ytest1, nXtest1, ytest);
     }
     
     printf("Tempo de cada iteração:\n");
