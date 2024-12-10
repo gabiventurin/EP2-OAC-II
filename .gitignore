@@ -5,3 +5,4 @@ fullCodeNoParallel
 teste*
 *.o
 ep
+output/Ytest.txt
