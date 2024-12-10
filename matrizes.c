@@ -26,7 +26,7 @@ void createYtrain(int n, int h, int w, int ytrainSize, double* xtrain, double* y
 }
 
 // TESTES
-
+/*
 int main() {
     // Parametros de entrada
     int h = 1;
@@ -45,14 +45,14 @@ int main() {
     double result[rows][w];
     createMatriz(xtrainsize, h, w, xtrain, result);
 
-    /*/ Imprime a matriz resultante
+    / Imprime a matriz resultante
     printf("Matriz resultante:\n");
     for (int i = 0; i < rows; i++) {
         for (int j = 0; j < w; j++) {
             printf("%.2f ", result[i][j]);
         }
         printf("\n");
-    }*/
+    }
 
    int ytrainSize = xtestsize - w - h + 1;
    double* ytrain = (double*)malloc(ytrainSize * sizeof(double));
@@ -65,5 +65,9 @@ int main() {
     printf("%.2lf\n", ytrain[i]);
    }
 
+   int x = findArraySize(xtest);
+
+   printf("%i\n", x);
+
     return 0;
-}
+}*/

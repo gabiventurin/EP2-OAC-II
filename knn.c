@@ -1,5 +1,6 @@
 #include <stdio.h>
 #include <stdlib.h>
+#include <omp.h>
 
 double* knn(int w, int xtrainSize, int xtestSize, double xtrain[xtrainSize][w], double xtest[xtestSize][w], double* ytrain) {
     double* ytest = (double*)malloc(xtestSize * sizeof(double));
@@ -32,6 +33,51 @@ double* knn(int w, int xtrainSize, int xtestSize, double xtrain[xtrainSize][w], 
             sum += ytrain[idx[j]];
         }
         ytest[i] = sum / w;
+    }
+    return ytest;
+}
+
+double* knnParalel(int w, int xtrainSize, int xtestSize, double xtrain[xtrainSize][w], double xtest[xtestSize][w], double* ytrain, int num_threads) {
+    double* ytest = (double*)malloc(xtestSize * sizeof(double)); // memory allocation for Ytest
+
+    // ACHO QUE ESSE PEDACO QUE PRECISA SER PARALELIZADO PORQUE É NA ORGANIZAÇÃO DO YTEST QUE ESTÁ O CUSTO COMPUTACIONAL
+    // PRECISA DIVIDIR O YTEST E DEIXAR O FOR I CERTINHO PRA ELE ACERTAR A LOCALIZAÇÃO DO RESULTADO NO ARRAY
+
+    // OUTRO TESTE QUE PODE SER FEITO É PARALELIZAR INTERNAMENTE CADA ITERAÇÃO DE i
+    #pragma omp paralel num_threads
+    {
+        int i;
+        #pragma omp for
+        for (i = 0; i < xtestSize; i++) { // iterates over each xtest
+            double* dist = (double*)malloc(xtrainSize * sizeof(double)); // memory allocation for the intermediary array
+            for (int j = 0; j < xtrainSize; j++) {
+                dist[j] = 0;
+                for (int k = 0; k < w; k++) {
+                    dist[j] += (xtrain[j][k] - xtest[i][k]) * (xtrain[j][k] - xtest[i][k]);
+                }
+            }
+            int* idx = (int*)malloc(xtrainSize * sizeof(int));
+            for (int j = 0; j < xtrainSize; j++) {
+                idx[j] = j;
+            }
+            for (int j = 0; j < xtrainSize; j++) {
+                for (int k = j + 1; k < xtrainSize; k++) {
+                    if (dist[j] > dist[k]) {
+                        double temp = dist[j];
+                        dist[j] = dist[k];
+                        dist[k] = temp;
+                        int temp2 = idx[j];
+                        idx[j] = idx[k];
+                        idx[k] = temp2;
+                    }
+                }
+            }
+            double sum = 0;
+            for (int j = 0; j < w; j++) {
+                sum += ytrain[idx[j]];
+            }
+            ytest[i] = sum / w;
+        }
     }
     return ytest;
 }

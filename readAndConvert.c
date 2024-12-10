@@ -1,39 +1,37 @@
 #include <stdio.h>
 #include <stdlib.h>
+#include <locale.h>
 
 int getNumberOfLines(char* f){
     FILE* fptr = fopen(f, "r");
     int count = 0;
-    char* tmp;
+    char c;
 
-    while (fgets(tmp, 30, fptr)){
-        count++;
+    for(c = getc(fptr); c != EOF; c = getc(fptr)){
+        if(c=='\n') count++;
     }
 
-    fclose(f);
+    fclose(fptr);
 
     return count;
 }
 
-void readFileAndConvertToArray(char* f, double* array){
+double* readFileAndConvertToArray(char* f){
 
     FILE* fptr; // usado para passar pelo arquivo .txt
-    char* numeroString; // usado para pegar apenas um numero do arquivo
     int sizeOfFile; // usado para armazenar o tamanho do arquivo
     char* fileString; // usado para guardar o conteúdo do arquivo
-    char* numberString;
+    char numberString[30];
     int sizeOfArray; // usado para guardar o tamanho da matriz
-    
-    fseek(f, 0, SEEK_END); // vai ao fim do arquivo
-    sizeOfFile = ftell(f); // marca o tamanho do arquivo
-    fseek(f, 0, SEEK_SET); // volta para o inicio do arquivo
+    double* array;
 
+    //setlocale(LC_ALL, "C");
+    
     fptr = fopen(f, "r"); // abre o arquivo
 
-    if(fptr == NULL){
-        printf("The file is invalid.");
-        return;
-    }
+    fseek(fptr, 0, SEEK_END); // vai ao fim do arquivo
+    sizeOfFile = ftell(fptr); // marca o tamanho do arquivo
+    fseek(fptr, 0, SEEK_SET); // volta para o inicio do arquivo
 
     fileString = (char*)malloc(sizeOfFile * sizeof(char)); // aloca o espaco para guardar o arquivo em uma string
 
@@ -42,30 +40,27 @@ void readFileAndConvertToArray(char* f, double* array){
     array = (double*)malloc(sizeOfArray * sizeof(double));
 
     for(int i = 0; i<sizeOfArray; i++){
-        fgets(numberString, 30, fptr);
-        int tmpDouble = atof(numberString);
-        array[i] = tmpDouble;
+        if(fgets(numberString, 30, fptr)!=NULL){
+            double tmpDouble = atof(numberString);
+            array[i] = tmpDouble;
+        }
     }
-
-    fclose(f);
-
-    return;
-}
-
-
-void readArrayAndConvertToFile(double* array, int arraySize){
-    FILE* fptr;
-    
-    fptr = fopen("output/Ytest.txt", "w");
-
-    fprintf(fptr, "%lf", array[0]);
 
     fclose(fptr);
 
-    fptr = fopen("output/Ytest.txt", "a");
+    return array;
+}
+
+
+void readArrayAndConvertToFile(double* array, int arraySize, char* fileName){
+    FILE* fptr;
+    
+    fptr = fopen(fileName, "w");
+
+    fprintf(fptr, "%.2lf", array[0]);
 
     for(int i = 1; i<arraySize; i++){
-        fprintf(fptr, "\n%lf", array[i]);
+        fprintf(fptr, "\n%.2lf", array[i]);
     }
     
     fclose(fptr);
@@ -77,6 +72,16 @@ void readArrayAndConvertToFile(double* array, int arraySize){
 // USE FOR TESTS
 /*
 int main(){
+
+    char* file = "data/teste.txt";
+
+    double* teste = readFileAndConvertToArray(file);
+
+    for(int i = 0; i<3; i++){
+        printf("%.2lf\n", teste[i]);
+    }
+
+    int nXtrain1 = getNumberOfLines(file);
 
     double array[] = {0.1, 2.0, 1234.3456};
     int arraySize = 3;
