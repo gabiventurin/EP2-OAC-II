@@ -1,5 +1,6 @@
 #include <stdio.h>
 #include <stdlib.h>
+#include <time.h>
 #include "readAndConvert.h"
 #include "matrizes.h"
 #include "knn.h"
@@ -18,7 +19,10 @@ int main(){
     double* arrayXtrain1 = readFileAndConvertToArray(xtrain1);
     double* arrayXtest1 = readFileAndConvertToArray(xtest1);
     
-    printf("Arquivos colocados nos arrays!\nCriando as matrizes do X...\n");
+    printf("Arquivos colocados nos arrays!\n Iniciando o cronômetro e criando as matrizes do X...\n");
+
+    double timeInit = (double) clock();
+    timeInit = timeInit/CLOCKS_PER_SEC;
 
     // agora os arrays de xtrain1 e xtest1 estão, respectivamente, em arrayXtrain1 e arrayXtest1
 
