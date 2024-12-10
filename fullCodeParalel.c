@@ -49,13 +49,13 @@ int main(){
     int ytrain1Size = nXtrain1 - w - h + 1;
     double* ytrain1 = (double*)malloc(ytrain1Size * sizeof(double));
     
-    createYtrain(nXtrain1, h, w, ytrain1Size, arrayXtrain1, ytrain1);
+    createYtrain(nXtrain1, h, w, ytrain1Size, arrayXtrain1, ytrain1); // essa é a função que precisa ser paralelizada!!
 
     printf("YTrain criada! Realizando o KNN...\n");
 
     // REALIZACAO DO KNN
 
-    double* ytest1 = knn(w, nXtrain1, nXtest1, matrixXtrain1, matrixXtest1, ytrain1);
+    double* ytest1 = knnParalel(w, nXtrain1, nXtest1, matrixXtrain1, matrixXtest1, ytrain1);
 
     double timeEnd = (double) clock();
     timeEnd = timeEnd / CLOCKS_PER_SEC;
