@@ -47,7 +47,7 @@ double* knnParalel(int w, int xtrainSize, int xtestSize, double xtrain[xtrainSiz
     #pragma omp paralel
     {
         int i;
-        #pragma omp for
+        #pragma omp for // linha problema 1
         for (i = 0; i < xtestSize; i++) { // iterates over each xtest
             double* dist = (double*)malloc(xtrainSize * sizeof(double)); // memory allocation for the intermediary array
             for (int j = 0; j < xtrainSize; j++) {
@@ -76,7 +76,7 @@ double* knnParalel(int w, int xtrainSize, int xtestSize, double xtrain[xtrainSiz
             for (int j = 0; j < w; j++) {
                 sum += ytrain[idx[j]];
             }
-            ytest[i] = sum / w;
+            ytest[i] = sum / w; // linha problema 2 :(
         }
     }
     return ytest;
