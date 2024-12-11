@@ -33,6 +33,9 @@ double* knn(int w, int xtrainSize, int xtestSize, double xtrain[xtrainSize][w], 
             sum += ytrain[idx[j]];
         }
         ytest[i] = sum / w;
+
+        free(dist);
+        free(idx);
     }
     return ytest;
 }
@@ -77,6 +80,9 @@ double* knnParalel(int w, int xtrainSize, int xtestSize, double xtrain[xtrainSiz
                 sum += ytrain[idx[j]];
             }
             ytest[i] = sum / w;
+
+            free(dist);
+            free(idx);
         }
     }
     return ytest;
