@@ -40,7 +40,7 @@ double* knn(int w, int xtrainSize, int xtestSize, double xtrain[xtrainSize][w], 
     return ytest;
 }
 
-double* knnParalel(int w, int xtrainSize, int xtestSize, double xtrain[xtrainSize][w], double xtest[xtestSize][w], double* ytrain, int numThreads) {
+double* knnParalel(int w, int xtrainSize, int xtestSize, double xtrain[xtrainSize][w], double xtest[xtestSize][w], double* ytrain, int nThreads) {
     double* ytest = (double*)malloc(xtestSize * sizeof(double)); // memory allocation for Ytest
 
     // ACHO QUE ESSE PEDACO QUE PRECISA SER PARALELIZADO PORQUE É NA ORGANIZAÇÃO DO YTEST QUE ESTÁ O CUSTO COMPUTACIONAL
@@ -48,7 +48,7 @@ double* knnParalel(int w, int xtrainSize, int xtestSize, double xtrain[xtrainSiz
 
     // OUTRO TESTE QUE PODE SER FEITO É PARALELIZAR INTERNAMENTE CADA ITERAÇÃO DE i
     int i;
-    #pragma omp paralel num_threads(4)
+    #pragma omp paralel num_threads(nThreads)
     {
         #pragma omp for
         for (i = 0; i < xtestSize; i++) { // iterates over each xtest
