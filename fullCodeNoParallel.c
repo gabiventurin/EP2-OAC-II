@@ -8,16 +8,16 @@
 int main(){
 
     // DETERMINACAO DOS ARQUIVOS
-    char* xtrain1 = "data/dados_xtrain.txt";
-    char* xtest1 = "data/dados_xtest_1000000.txt";
+    char* xtrain = "data/dados_xtrain.txt";
+    char* xtest = "data/dados_xtest_1000000.txt";
     char* ytest = "output/Ytest1000000.txt";
 
     printf("Arquivos determinados!\nLendo arquivos e colocando em arrays...\n");
 
     // LEITURA DOS ARQUIVOS
 
-    double* arrayXtrain1 = readFileAndConvertToArray(xtrain1);
-    double* arrayXtest1 = readFileAndConvertToArray(xtest1);
+    double* arrayXtrain = readFileAndConvertToArray(xtrain);
+    double* arrayXtest = readFileAndConvertToArray(xtest);
 
     printf("Quantas iterações devem ser realizadas?\n>");
     
@@ -38,34 +38,34 @@ int main(){
         double timeInit = (double) clock();
         timeInit = timeInit/CLOCKS_PER_SEC;
 
-        // agora os arrays de xtrain1 e xtest1 estão, respectivamente, em arrayXtrain1 e arrayXtest1
+        // agora os arrays de xtrain e xtest estão, respectivamente, em arrayXtrain e arrayXtest
 
         // CRIACAO DAS MATRIZES
-        int nXtrain1 = getNumberOfLines(xtrain1);
-        int nXtest1 = getNumberOfLines(xtest1);
+        int nXtrain = getNumberOfLines(xtrain);
+        int nXtest = getNumberOfLines(xtest);
 
         int h = 1;
         int w = 3;
 
-        int rowsXtrain1 = nXtrain1 - w - h + 2;
-        int rowsXtest1 = nXtest1 - w - h + 2;
+        int rowsXtrain = nXtrain - w - h + 2;
+        int rowsXtest = nXtest - w - h + 2;
 
-        double matrixXtrain1[rowsXtrain1][w];
-        double matrixXtest1[rowsXtest1][w];
+        double matrixXtrain[rowsXtrain][w];
+        double matrixXtest[rowsXtest][w];
 
-        createMatriz(nXtrain1, h, w, arrayXtrain1, matrixXtrain1);
-        createMatriz(nXtest1, h, w, arrayXtest1, matrixXtest1);
+        createMatriz(nXtrain, h, w, arrayXtrain, matrixXtrain);
+        createMatriz(nXtest, h, w, arrayXtest, matrixXtest);
 
         // CRIACAO DO YTRAIN
 
-        int ytrain1Size = nXtrain1 - w - h + 1;
-        double* ytrain1 = (double*)malloc(ytrain1Size * sizeof(double));
+        int ytrainSize = nXtrain - w - h + 1;
+        double* ytrain = (double*)malloc(ytrainSize * sizeof(double));
         
-        createYtrain(nXtrain1, h, w, ytrain1Size, arrayXtrain1, ytrain1);
+        createYtrain(nXtrain, h, w, ytrainSize, arrayXtrain, ytrain);
 
         // REALIZACAO DO KNN
 
-        double* ytest1 = knn(w, nXtrain1, nXtest1, matrixXtrain1, matrixXtest1, ytrain1);
+        double* ytest = knn(w, nXtrain, nXtest, matrixXtrain, matrixXtest, ytrain);
 
         double timeEnd = (double) clock();
         timeEnd = timeEnd / CLOCKS_PER_SEC;
@@ -74,9 +74,9 @@ int main(){
 
         tempos[i] = timeEnd - timeInit;
 
-        readArrayAndConvertToFile(ytest1, nXtest1, ytest);
+        readArrayAndConvertToFile(ytest, nXtest, ytest);
 
-        free(ytrain1);
+        free(ytrain);
     }
     
     printf("Tempo de cada iteração:\n");

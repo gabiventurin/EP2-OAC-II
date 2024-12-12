@@ -52,8 +52,8 @@ int main(){
         double matrixXtrain1[rowsXtrain1][w];
         double matrixXtest1[rowsXtest1][w];
 
-        createMatrizParallel(nXtrain1, h, w, arrayXtrain1, matrixXtrain1);
-        createMatrizParallel(nXtest1, h, w, arrayXtest1, matrixXtest1);
+        createMatrizParallel(nXtrain1, h, w, arrayXtrain1, matrixXtrain1, 4);
+        createMatrizParallel(nXtest1, h, w, arrayXtest1, matrixXtest1, 4);
 
         // CRIACAO DO YTRAIN
 

@@ -14,10 +14,10 @@ void createMatriz(int n, int h, int w, double* array, double result[][w]) {
     }
 }
 
-void createMatrizParallel(int n, int h, int w, double* array, double result[][w]) {
+void createMatrizParallel(int n, int h, int w, double* array, double result[][w], int nThreads) {
     int limitindex = n - w - h + 2; // Índice limite para as linhas
 
-    #pragma omp parallel
+    #pragma omp parallel num_threads(nThreads)
     {
         int i;
         #pragma omp for
