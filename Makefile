@@ -1,19 +1,19 @@
 #Configurando o Makefile
 
 parallelEP: readAndConvert matrizes knn
-	gcc -g readAndConvert.o matrizes.o knn.o fullCodeParallel.c -lomp5 -fopenmp -o ep
+	gcc -g readAndConvert.o matrizes.o knn.o fullCodeParallel.c -fopenmp -o ep
 
 normalEP: readAndConvert matrizes knn
-	gcc -g readAndConvert.o matrizes.o knn.o fullCodeNoParallel.c -lomp5 -fopenmp -o ep
+	gcc -g readAndConvert.o matrizes.o knn.o fullCodeNoParallel.c -fopenmp -o ep
 
 readAndConvert:
 	gcc -c -g -o readAndConvert.o readAndConvert.c
 
 matrizes:
-	gcc -c -g -lomp5 -fopenmp -o matrizes.o matrizes.c
+	gcc -c -g -fopenmp -o matrizes.o matrizes.c
 
 knn:
-	gcc -c -g -lomp5 -fopenmp -o knn.o knn.c 
+	gcc -c -g -fopenmp -o knn.o knn.c 
 
 pedantic_parallel: readAndConvert_pedantic matrizes_pedantic knn_pedantic
 	gcc -ansi -std=c99 -pedantic -Wall -Werror readAndConvert_pedantic.o matrizes_pedantic.o knn_pedantic.o fullCodeParallel.c -o ep
