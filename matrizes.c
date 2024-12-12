@@ -1,5 +1,6 @@
 #include <stdio.h>
 #include <stdlib.h>
+#include <omp.h>
 
 // Função para criar a matriz
 void createMatriz(int n, int h, int w, double* array, double result[][w]) {
@@ -12,6 +13,22 @@ void createMatriz(int n, int h, int w, double* array, double result[][w]) {
         }
     }
 }
+
+void createMatrizParallel(int n, int h, int w, double* array, double result[][w]) {
+    int limitindex = n - w - h + 2; // Índice limite para as linhas
+
+    #pragma omp parallel
+    {
+        int i;
+        #pragma omp for
+            for (i = 0; i < limitindex; i++) {
+                for (int j = 0; j < w; j++) {
+                    result[i][j] = array[i + j]; // Preenche cada linha da matriz com w elementos consecutivos
+                }
+            }
+    }
+}
+
 
 void createYtrain(int n, int h, int w, int ytrainSize, double* xtrain, double* ytrain){
 

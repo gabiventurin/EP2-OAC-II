@@ -9,7 +9,7 @@ int main(){
 
     // DETERMINACAO DOS ARQUIVOS
     char* xtrain1 = "data/dados_xtrain.txt";
-    char* xtest1 = "data/dados_xtest_100000.txt";
+    char* xtest1 = "data/dados_xtest_1000000.txt";
     char* ytest = "output/Ytest.txt";
 
     printf("Arquivos determinados!\nLendo arquivos e colocando em arrays...\n");

@@ -1,6 +1,6 @@
 #include <stdio.h>
 #include <stdlib.h>
-#include <time.h>
+#include <omp.h>
 #include "readAndConvert.h"
 #include "matrizes.h"
 #include "knn.h"
@@ -35,9 +35,8 @@ int main(){
 
     for(int i = 0; i < iteracoes; i++){
 
-        double timeInit = (double) clock();
-        timeInit = timeInit/CLOCKS_PER_SEC;
-
+        double timeInit = omp_get_wtime();
+        
         // agora os arrays de xtrain1 e xtest1 estão, respectivamente, em arrayXtrain1 e arrayXtest1
 
         // CRIACAO DAS MATRIZES
@@ -53,8 +52,8 @@ int main(){
         double matrixXtrain1[rowsXtrain1][w];
         double matrixXtest1[rowsXtest1][w];
 
-        createMatriz(nXtrain1, h, w, arrayXtrain1, matrixXtrain1);
-        createMatriz(nXtest1, h, w, arrayXtest1, matrixXtest1);
+        createMatrizParallel(nXtrain1, h, w, arrayXtrain1, matrixXtrain1);
+        createMatrizParallel(nXtest1, h, w, arrayXtest1, matrixXtest1);
 
         // CRIACAO DO YTRAIN
 
@@ -65,11 +64,10 @@ int main(){
 
         // REALIZACAO DO KNN
 
-        double* ytest1 = knnParalel(w, nXtrain1, nXtest1, matrixXtrain1, matrixXtest1, ytrain1, 4);
+        double* ytest1 = knnParallel(w, nXtrain1, nXtest1, matrixXtrain1, matrixXtest1, ytrain1, 4);
 
-        double timeEnd = (double) clock();
-        timeEnd = timeEnd / CLOCKS_PER_SEC;
-
+        double timeEnd = omp_get_wtime();
+        
         // COLOCAÇÃO DOS RESULTADOS EM UM ARQUIVO E FREE'S
 
         tempos[i] = timeEnd - timeInit;
