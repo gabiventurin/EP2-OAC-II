@@ -59,13 +59,13 @@ int main(){
         // CRIACAO DO YTRAIN
 
         int ytrainSize = nXtrain - w - h + 1;
-        double* ytrain = (double*)malloc(ytrainSize * sizeof(double));
+        double* arrayYtrain = (double*)malloc(ytrainSize * sizeof(double));
         
-        createYtrain(nXtrain, h, w, ytrainSize, arrayXtrain, ytrain);
+        createYtrain(nXtrain, h, w, ytrainSize, arrayXtrain, arrayYtrain);
 
         // REALIZACAO DO KNN
 
-        double* ytest = knn(w, nXtrain, nXtest, matrixXtrain, matrixXtest, ytrain);
+        double* arrayYtest = knn(w, nXtrain, nXtest, matrixXtrain, matrixXtest, arrayYtrain);
 
         double timeEnd = (double) clock();
         timeEnd = timeEnd / CLOCKS_PER_SEC;
@@ -74,9 +74,9 @@ int main(){
 
         tempos[i] = timeEnd - timeInit;
 
-        readArrayAndConvertToFile(ytest, nXtest, ytest);
+        readArrayAndConvertToFile(arrayYtest, nXtest, ytest);
 
-        free(ytrain);
+        free(arrayYtrain);
     }
     
     printf("Tempo de cada iteração:\n");
