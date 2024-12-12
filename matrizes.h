@@ -5,6 +5,8 @@
  */
 void createMatriz(int n, int h, int w, double* array, double result[][w]);
 
+void createMatrizParallel(int n, int h, int w, double* array, double result[][w]);
+
 /**
  * Funcao que calcula ytrain
  * 
