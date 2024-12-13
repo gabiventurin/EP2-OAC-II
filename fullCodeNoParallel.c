@@ -9,8 +9,8 @@ int main(){
 
     // DETERMINACAO DOS ARQUIVOS
     char* xtrain = "data/dados_xtrain.txt";
-    char* xtest = "data/dados_xtest_10000000.txt";
-    char* ytest = "output/Ytest.txt";
+    char* xtest = "data/dados_xtest_10.txt";
+    char* ytest = "output/YtestAux.txt";
 
     printf("Arquivos determinados!\nLendo arquivos e colocando em arrays...\n");
 
@@ -44,6 +44,7 @@ int main(){
         int nXtrain = getNumberOfLines(xtrain);
         int nXtest = getNumberOfLines(xtest);
 
+        int k = 3;
         int h = 1;
         int w = 3;
 
@@ -65,7 +66,7 @@ int main(){
 
         // REALIZACAO DO KNN
 
-        double* arrayYtest = knn(w, nXtrain, nXtest, matrixXtrain, matrixXtest, arrayYtrain);
+        double* arrayYtest = knn(w, k, nXtrain, nXtest, matrixXtrain, matrixXtest, arrayYtrain);
 
         double timeEnd = (double) clock();
         timeEnd = timeEnd / CLOCKS_PER_SEC;

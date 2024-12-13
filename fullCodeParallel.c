@@ -43,6 +43,7 @@ int main(){
         int nXtrain = getNumberOfLines(xtrain);
         int nXtest = getNumberOfLines(xtest);
 
+        int k = 3;
         int h = 1;
         int w = 3;
 
@@ -64,7 +65,7 @@ int main(){
 
         // REALIZACAO DO KNN
 
-        double* arrayYtest = knnParallel(w, nXtrain, nXtest, matrixXtrain1, matrixXtest1, arrayYtrain, 4);
+        double* arrayYtest = knnParallel(w, k, nXtrain, nXtest, matrixXtrain1, matrixXtest1, arrayYtrain, 4);
 
         double timeEnd = omp_get_wtime();
         
