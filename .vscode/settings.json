@@ -1,6 +1,8 @@
 {
     "files.associations": {
-        "readandconvert.h": "c"
+        "readandconvert.h": "c",
+        "stdio.h": "c",
+        "matrizes.h": "c"
     },
     "makefile.configureOnOpen": false
 }
