@@ -1,4 +1,6 @@
 #Configurando o Makefile
+ep: readAndConvert matrizes knn
+	gcc -g readAndConvert.o matrizes.o knn.o main.c -fopenmp -o ep
 
 parallelEP: readAndConvert matrizes knn
 	gcc -g readAndConvert.o matrizes.o knn.o fullCodeParallel.c -fopenmp -o ep
