@@ -9,8 +9,8 @@ int main(){
 
     // DETERMINACAO DOS ARQUIVOS
     char* xtrain = "data/dados_xtrain.txt";
-    char* xtest = "data/dados_xtest_1000000.txt";
-    char* ytest = "output/YtestPar1000000.txt";
+    char* xtest = "data/dados_xtest_10000000.txt";
+    char* ytest = "output/YtestPar.txt";
 
     printf("Arquivos determinados!\nLendo arquivos e colocando em arrays...\n");
 
@@ -43,6 +43,7 @@ int main(){
         int nXtrain = getNumberOfLines(xtrain);
         int nXtest = getNumberOfLines(xtest);
 
+        int k = 3;
         int h = 1;
         int w = 3;
 
@@ -64,7 +65,7 @@ int main(){
 
         // REALIZACAO DO KNN
 
-        double* arrayYtest = knnParallel(w, nXtrain, nXtest, matrixXtrain1, matrixXtest1, arrayYtrain, 4);
+        double* arrayYtest = knnParallel(w, k, nXtrain, nXtest, matrixXtrain1, matrixXtest1, arrayYtrain, 4);
 
         double timeEnd = omp_get_wtime();
         

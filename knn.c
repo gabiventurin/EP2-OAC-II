@@ -2,14 +2,14 @@
 #include <stdlib.h>
 #include <omp.h>
 
-double* knn(int w, int xtrainSize, int xtestSize, double xtrain[xtrainSize][w], double xtest[xtestSize][w], double* ytrain) {
+double* knn(int w, int k, int xtrainSize, int xtestSize, double xtrain[xtrainSize][w], double xtest[xtestSize][w], double* ytrain) {
     double* ytest = (double*)malloc(xtestSize * sizeof(double));
     for (int i = 0; i < xtestSize; i++) {
         double* dist = (double*)malloc(xtrainSize * sizeof(double));
         for (int j = 0; j < xtrainSize; j++) {
             dist[j] = 0;
-            for (int k = 0; k < w; k++) {
-                dist[j] += (xtrain[j][k] - xtest[i][k]) * (xtrain[j][k] - xtest[i][k]);
+            for (int b = 0; b < w; b++) {
+                dist[j] += (xtrain[j][b] - xtest[i][b]) * (xtrain[j][b] - xtest[i][b]);
             }
         }
         int* idx = (int*)malloc(xtrainSize * sizeof(int));
@@ -17,22 +17,22 @@ double* knn(int w, int xtrainSize, int xtestSize, double xtrain[xtrainSize][w], 
             idx[j] = j;
         }
         for (int j = 0; j < xtrainSize; j++) {
-            for (int k = j + 1; k < xtrainSize; k++) {
-                if (dist[j] > dist[k]) {
+            for (int b = j + 1; b < xtrainSize; b++) {
+                if (dist[j] > dist[b]) {
                     double temp = dist[j];
-                    dist[j] = dist[k];
-                    dist[k] = temp;
+                    dist[j] = dist[b];
+                    dist[b] = temp;
                     int temp2 = idx[j];
-                    idx[j] = idx[k];
-                    idx[k] = temp2;
+                    idx[j] = idx[b];
+                    idx[b] = temp2;
                 }
             }
         }
         double sum = 0;
-        for (int j = 0; j < w; j++) {
+        for (int j = 0; j < k; j++) {
             sum += ytrain[idx[j]];
         }
-        ytest[i] = sum / w;
+        ytest[i] = sum / k;
 
         free(dist);
         free(idx);
@@ -40,7 +40,7 @@ double* knn(int w, int xtrainSize, int xtestSize, double xtrain[xtrainSize][w], 
     return ytest;
 }
 
-double* knnParallel(int w, int xtrainSize, int xtestSize, double xtrain[xtrainSize][w], double xtest[xtestSize][w], double* ytrain, int nThreads) {
+double* knnParallel(int w, int k, int xtrainSize, int xtestSize, double xtrain[xtrainSize][w], double xtest[xtestSize][w], double* ytrain, int nThreads) {
     double* ytest = (double*)malloc(xtestSize * sizeof(double)); // memory allocation for Ytest
 
     // ACHO QUE ESSE PEDACO QUE PRECISA SER PARALELIZADO PORQUE É NA ORGANIZAÇÃO DO YTEST QUE ESTÁ O CUSTO COMPUTACIONAL
@@ -55,8 +55,8 @@ double* knnParallel(int w, int xtrainSize, int xtestSize, double xtrain[xtrainSi
             double* dist = (double*)malloc(xtrainSize * sizeof(double)); // memory allocation for the intermediary array
             for (int j = 0; j < xtrainSize; j++) {
                 dist[j] = 0;
-                for (int k = 0; k < w; k++) {
-                    dist[j] += (xtrain[j][k] - xtest[i][k]) * (xtrain[j][k] - xtest[i][k]);
+                for (int b = 0; b < w; b++) {
+                    dist[j] += (xtrain[j][b] - xtest[i][b]) * (xtrain[j][b] - xtest[i][b]);
                 }
             }
             int* idx = (int*)malloc(xtrainSize * sizeof(int));
@@ -64,22 +64,22 @@ double* knnParallel(int w, int xtrainSize, int xtestSize, double xtrain[xtrainSi
                 idx[j] = j;
             }
             for (int j = 0; j < xtrainSize; j++) {
-                for (int k = j + 1; k < xtrainSize; k++) {
-                    if (dist[j] > dist[k]) {
+                for (int b = j + 1; b < xtrainSize; b++) {
+                    if (dist[j] > dist[b]) {
                         double temp = dist[j];
-                        dist[j] = dist[k];
-                        dist[k] = temp;
+                        dist[j] = dist[b];
+                        dist[b] = temp;
                         int temp2 = idx[j];
-                        idx[j] = idx[k];
-                        idx[k] = temp2;
+                        idx[j] = idx[b];
+                        idx[b] = temp2;
                     }
                 }
             }
             double sum = 0;
-            for (int j = 0; j < w; j++) {
+            for (int j = 0; j < k; j++) {
                 sum += ytrain[idx[j]];
             }
-            ytest[i] = sum / w;
+            ytest[i] = sum / k;
 
             free(dist);
             free(idx);
@@ -99,7 +99,7 @@ int main() {
     int xtestSize = 7;
     int w = 3;
 
-    double* ytest = knn(w, xtrainSize, xtestSize, xtrain, xtest, ytrain);
+    double* ytest = bnn(w, xtrainSize, xtestSize, xtrain, xtest, ytrain);
 
     for (int i = 0; i < xtestSize; i++) {
         printf("%f\n", ytest[i]);
