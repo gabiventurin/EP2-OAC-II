@@ -1,4 +1,6 @@
 #Configurando o Makefile
+ep: readAndConvert matrizes knn
+	gcc -g readAndConvert.o matrizes.o knn.o main.c -fopenmp -o ep
 
 parallelEP: readAndConvert matrizes knn
 	gcc -g readAndConvert.o matrizes.o knn.o fullCodeParallel.c -fopenmp -o ep
@@ -14,6 +16,9 @@ matrizes:
 
 knn:
 	gcc -c -g -fopenmp -o knn.o knn.c 
+
+pedantic_ep: readAndConvert_pedantic matrizes_pedantic knn_pedantic
+	gcc -ansi -std=c99 -pedantic -Wall -Werror readAndConvert_pedantic.o matrizes_pedantic.o knn_pedantic.o main.c -o ep
 
 pedantic_parallel: readAndConvert_pedantic matrizes_pedantic knn_pedantic
 	gcc -ansi -std=c99 -pedantic -Wall -Werror readAndConvert_pedantic.o matrizes_pedantic.o knn_pedantic.o fullCodeParallel.c -o ep
